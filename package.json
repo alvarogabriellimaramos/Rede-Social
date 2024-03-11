@@ -1,0 +1,23 @@
+{
+  "name": "rede-social",
+  "version": "1.0.0",
+  "description": "O projeto será uma rede social",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Álvaro Gabriel",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express-handlebars": "^7.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.1",
+    "nodemailer": "^6.9.12"
+  },
+  "devDependencies": {
+    "validator": "^13.11.0"
+  }
+}
