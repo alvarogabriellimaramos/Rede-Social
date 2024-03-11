@@ -9,16 +9,27 @@ module.exports = {
     async SendToken (request,response) {
         try {
             const validator = require('validator');
-            const ValidatorUser = require('../../utils/ValidationUser');
             const {username,email,password,confirmPass} = request.body;
-            const Validation = ValidatorUser(request.body)
-            if (Validation) {
-                return response.json({messagem: 'Usuario criado com sucesso'})
+            if (!username || username.length < 4) {
+                return response.json({
+                    messagem: 'Seu nome de usuário é inválido ou já está registrado'
+                });
             };
-            return response.json(Validation);
+            if (!email || !validator.isEmail(email) || email.length > 255) {
+                return response.json({
+                    messagem: 'Seu e-mail é inválido ou já está registrado'
+                });
+            };
+            if (!password || password.length < 8 ){
+                return response.json({messagem:'Sua senha precisa ter no minimo 8 caracteres'});
+            };
+            if (confirmPass !== password) {
+                return 'Suas senhas não batem';
+            };
+            
         }
         catch (e) {
             return Error
-        }
+        };
     }
-}
+};
