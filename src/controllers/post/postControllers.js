@@ -1,4 +1,6 @@
-const {Hash,CompareHash} = require('../../utils/Hash');
+
+const SendEmail = require('../../services/emails/email');
+const {CreateToken} = require('../../utils/Token');
 
 // object responsável por manda mensagem de erro 
 const Error = {
@@ -24,12 +26,22 @@ module.exports = {
                 return response.json({messagem:'Sua senha precisa ter no minimo 8 caracteres'});
             };
             if (confirmPass !== password) {
-                return 'Suas senhas não batem';
+                return response.json({messagem: 'Suas senhas não batem'})
             };
-            
+            const User = {
+                username,
+                email,
+                password
+            };
+            const token = await CreateToken(User)
+            return response.status(200).json(await SendEmail(email,token));
         }
         catch (e) {
             return Error
         };
+    },
+    async CreateUser(request,response) {
+        const {username,email,password} = request.user;
+        
     }
 };
