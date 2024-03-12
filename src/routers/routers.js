@@ -1,7 +1,7 @@
 const router = require('express').Router();
 // controllers
 const {Login,Register} = require('../controllers/GetControllers');
-const {SendToken,CreateUser} = require('../controllers/post/postControllers');
+const {SendToken,CreateUser} = require('../controllers/post/controllerRegister');
 //middlewares
 const ErrMid = require('../middlewares/err/index');
 const JWT = require("../middlewares/jwt/index");

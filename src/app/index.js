@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 require("dotenv").config();
 
 const router = require("../routers/routers");
+require('../services/db/index')();
 
 const app = express();
 const hbs = exphbs.create({});

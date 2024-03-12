@@ -1,4 +1,4 @@
-
+const SchemaRegister = require('../../services/db/models/registers');
 const SendEmail = require('../../services/emails/email');
 const {CreateToken} = require('../../utils/Token');
 
@@ -12,12 +12,14 @@ module.exports = {
         try {
             const validator = require('validator');
             const {username,email,password,confirmPass} = request.body;
-            if (!username || username.length < 4) {
+            const UsernameExists = await SchemaRegister.findOne({username});
+            const EmailExists = await SchemaRegister.findOne({email});
+            if (!username || username.length < 4 || UsernameExists !== null) {
                 return response.json({
                     messagem: 'Seu nome de usuário é inválido ou já está registrado'
                 });
             };
-            if (!email || !validator.isEmail(email) || email.length > 255) {
+            if (!email || !validator.isEmail(email) || EmailExists !== null) {
                 return response.json({
                     messagem: 'Seu e-mail é inválido ou já está registrado'
                 });
@@ -42,6 +44,16 @@ module.exports = {
     },
     async CreateUser(request,response) {
         const {username,email,password} = request.user;
-        
+        const UsernameExists = await SchemaRegister.findOne({username});
+        const EmailExists = await SchemaRegister.findOne({email});
+        if (UsernameExists !== null || EmailExists !== null) {
+            return response.json({messagem: 'Essa conta já está registrada'});
+        };
+        await SchemaRegister.create({
+            username,
+            email,
+            password
+        });
+        return response.redirect('/login');
     }
 };
