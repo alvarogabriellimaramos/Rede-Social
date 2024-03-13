@@ -6,7 +6,7 @@ module.exports = function (request,response,next) {
         return response.json({
             messagem: 'Token inválido'
         });
-    } 
+    }; 
     const SECRET = process.env.SECRET;
     jwt.verify(token,SECRET,function (err,user) {
         if (err) {

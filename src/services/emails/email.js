@@ -5,7 +5,6 @@ require('dotenv').config();
 
 const EmailFrom = process.env.EMAIL;
 const PasswordFrom = process.env.PASSWORD;
-console.log(EmailFrom);
 
 function SendEmail(email,token) {
     const transporter = nodemailer.createTransport({
