@@ -1,8 +1,11 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
+// Esse será o modulo responsável por envia o token para o email do usuario
 
-const EmailFrom = 'alvarogabriel1103@hotmail.com';
-const PasswordFrom = 'alalal##';
+const EmailFrom = process.env.EMAIL;
+const PasswordFrom = process.env.PASSWORD;
+console.log(EmailFrom);
 
 function SendEmail(email,token) {
     const transporter = nodemailer.createTransport({

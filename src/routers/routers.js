@@ -1,7 +1,9 @@
 const router = require('express').Router();
+
 // controllers
 const {Login,Register} = require('../controllers/GetControllers');
-const {SendToken,CreateUser} = require('../controllers/post/controllerRegister');
+const {SendToken,CreateUser} = require('../controllers/post/Register');
+
 //middlewares
 const ErrMid = require('../middlewares/err/index');
 const JWT = require("../middlewares/jwt/index");
@@ -15,7 +17,7 @@ router.get('/jwt/create',CreateUser);
 // rotas post
 router.post('/sendEmail',SendToken);
 
-// middleware erro
+// middleware erro,caso o usuario acesse uma rota que não existe (404);
 router.use(ErrMid);
 
 module.exports = router;

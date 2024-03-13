@@ -1,5 +1,6 @@
 const form__register = document.querySelector('.form__register');
 const inputs = document.querySelectorAll('input');
+const Text = document.querySelector(".text");
 
 form__register.addEventListener('submit',async event => {
     event.preventDefault();
@@ -13,5 +14,15 @@ form__register.addEventListener('submit',async event => {
             confirmPass: inputs[3].value
         })
     });
-    console.log(await data.json());
+    
+    const {messagem} = await data.json();
+    if (messagem !== 'Email enviado com sucesso') {
+        Text.style.color = 'red';
+        Text.style.fontWeight = 'bold';
+        Text.textContent = messagem;
+        return;
+    }
+    Text.style.color = 'green';
+    Text.style.fontWeight = 'bold';
+    Text.textContent = messagem;
 });

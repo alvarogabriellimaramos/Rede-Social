@@ -1,3 +1,5 @@
+// controller responsável pelo registro dos usuarios
+
 const SchemaRegister = require('../../services/db/models/registers');
 const SendEmail = require('../../services/emails/email');
 const {CreateToken} = require('../../utils/Token');
