@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 
 
-const EmailFrom = 'alvarogabriel1103@hotmail.com';
-const PasswordFrom = 'alalal##';
+const EmailFrom = '';
+const PasswordFrom = '';
 
 function SendEmail(email,token) {
     const transporter = nodemailer.createTransport({
