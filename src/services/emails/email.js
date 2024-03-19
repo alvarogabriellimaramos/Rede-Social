@@ -1,7 +1,8 @@
+// Esse será o modulo responsável por envia o token para o email do usuario
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// Esse será o modulo responsável por envia o token para o email do usuario
+const html = require("./html");
 
 const EmailFrom = process.env.EMAIL;
 const PasswordFrom = process.env.PASSWORD;
@@ -18,12 +19,7 @@ function SendEmail(email,token) {
         from: EmailFrom,
         to: email,
         subject: 'Token de verificação',
-        html: `
-        <a href='http://localhost:8080/jwt/create?token=${token}'>
-            Clique aqui
-        </a>
-        
-        `
+        html: html(token)
     };
     return new Promise((resolve,reject) => {
         transporter.sendMail(mailOptions,function(error) {
@@ -31,7 +27,7 @@ function SendEmail(email,token) {
                 console.log(error);
                 reject({messagem: 'Erro ao envia email,tente novamente mais tarde.'});
             }
-            resolve({messagem: 'Email enviado com sucesso'})
+            resolve({messagem: 'Enviamos um token de verificação para o seu e-mail'})
         })
     })
 }

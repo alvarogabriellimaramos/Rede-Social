@@ -87,3 +87,8 @@ a:hover {
     align-items: center;
     padding: 10px;
 }
+.container form button:disabled {
+    background-color: #ccc;
+    color: black;
+    cursor: auto;
+}

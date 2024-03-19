@@ -1,6 +1,7 @@
 // controller responsável pelo registro dos usuarios
-
 const SchemaRegister = require('../../services/db/models/registers');
+const SchemaUsernames = require("../../services/db/models/usernames");
+
 const SendEmail = require('../../services/emails/email');
 const {CreateToken} = require('../../utils/Token');
 
@@ -14,8 +15,10 @@ module.exports = {
         try {
             const validator = require('validator');
             const {username,email,password,confirmPass} = request.body;
+
             const UsernameExists = await SchemaRegister.findOne({username});
             const EmailExists = await SchemaRegister.findOne({email});
+            
             if (!username || username.length < 4 || UsernameExists !== null) {
                 return response.json({
                     messagem: 'Seu nome de usuário é inválido ou já está registrado'
@@ -37,7 +40,8 @@ module.exports = {
                 email,
                 password
             };
-            const token = await CreateToken(User)
+            const token = await CreateToken(User);
+        
             return response.status(200).json(await SendEmail(email,token));
         }
         catch (e) {
@@ -51,11 +55,8 @@ module.exports = {
         if (UsernameExists !== null || EmailExists !== null) {
             return response.json({messagem: 'Essa conta já está registrada'});
         };
-        await SchemaRegister.create({
-            username,
-            email,
-            password
-        });
+        await SchemaRegister.create({username,email,password});
+        await SchemaUsernames.create({username});
         return response.redirect('/login');
     }
 };
